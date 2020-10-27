@@ -69,7 +69,7 @@
         } else {
           var elementParent = elem.parentNode;
           $(elementParent.children).each(function (index, child) {
-            if (index > 2 && index !== elementParent.children.length - 1)
+            if (index >= 2 && index !== elementParent.children.length - 1)
               $(child).hide();
           });
           $(elem).html("Xem thêm");

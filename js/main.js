@@ -75,8 +75,8 @@ function DocumentMap(arrData, elementDocumentMap) {
   this.RenderDocumentMapByType = function () {
     createHTMLByZone(that.documentZoneLeft, "#divLeft");
     createHTMLByZone(that.documentZoneRight, "#divRight");
-    createHTMLByZone(that.documentZoneTop, "#divMid");
-    createHTMLByZone(that.documentZoneBottom, "#divMid");
+    createHTMLByZone(that.documentZoneTop, "#divMid", "Top");
+    createHTMLByZone(that.documentZoneBottom, "#divMid", "Bottom");
     arrayElement = $(".items");
     $(arrayElement).each(function (i, item) {
       if (item.childElementCount > 2) {
@@ -91,14 +91,17 @@ function DocumentMap(arrData, elementDocumentMap) {
       }
     });
   };
-  function createHTMLByZone(documentZone, elementDivParent) {
+  function createHTMLByZone(documentZone, elementDivParent, positoin = "") {
     documentZone.sort(SortByRankDocumentType);
     var oldIdType;
     var classesLRC;
     $(documentZone).each(function (index, item) {
-      if (elementDivParent === "#divMid") {
+      if (elementDivParent === "#divMid" && positoin == "Top") {
         if (index == 0) classesLRC = "items-c";
-        else if (index == documentZone.length - 1) classesLRC = "items-c";
+        else
+          index % 2 == 0 ? (classesLRC = "items-l") : (classesLRC = "items-r");
+      } else if (elementDivParent === "#divMid" && positoin == "Bottom") {
+        if (index == documentZone.length - 1) classesLRC = "items-c";
         else
           index % 2 == 0 ? (classesLRC = "items-l") : (classesLRC = "items-r");
       }
@@ -132,6 +135,7 @@ function DocumentMap(arrData, elementDocumentMap) {
           "items-r items-l"
         );
       }
+      // oldIdType = 0;
       oldIdType = item.DocumentTypeId;
     });
   }
